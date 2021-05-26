@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Animation</title>
+</head>
+
+<body>
+    <!-- 用来绘制小球-->
+    <canvas id="mycanvas" width="200" height="200" style="border:1px solid #c3c3c3;">  
+
+    </canvas>
+    <script>
+        var width = window.width;
+        var height = window.height / 3;
+
+        // draw something need to use js
+        var canvas = document.getElementById("mycanvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        //  creat pen
+        var myPen = canvas.getContext("2d");
+        myPen.fillStyle = "#00CC00";
+        // fill all background
+        myPen.fillRect(0, 0, width, height);
+
+        //碰撞检测 动量守恒
+        //x,y,vx,vy,ax,ay,size,rou,color,ctx
+        var balla = new createBall(20, 0.5 * height, 5, -3, 0, 0, 8, 1, "#ff0", myPen);
+        var ballb = new createBall(width - 20, 0.5 * height, -3, 5, 0, 0, 13, 1, "#0ff", myPen);
+        var ballc = new createBall(width / 2, 0.5 * height, 7, 4, 0, 0, 13, 1, "#0ff", myPen);
+
+        // 创建小球
+        function createBall(x, y, vx, vy, ax, ay, size, p, color, pen) {
+            //x,y 为坐标，vx,vy为分速度，ax,ay为分加速度，size为大小，p为密度，pen为画笔
+            this.x = x;
+            this.y = y;
+            this.vx = vx;
+            this.vy = vy;
+            this.p = p;
+            this.m = Math.PI * this.size * this.size * p;
+
+            // 这里的用法还不知道呢
+            this.draw = function(pen) {
+                pen.fillStyle = color;
+                pen.beginPath();
+                pen.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                pen.fill();
+                pen.closePath();
+            }
+
+            this.draw(pen);
+        }
+        // reflash
+        setInterval(animation, 30);
+
+        function animation() {
+
+            //小球的速度等于速度加上加速度
+            balla.vx += balla.ax;
+            balla.vy += balla.ay;
+            //小球的位移等于小球现在的坐标加上速度
+            balla.x += balla.vx;
+            balla.y += balla.vy;
+
+            ballb.vx += ballb.ax;
+            ballb.vy += ballb.ay;
+            ballb.x += ballb.vx;
+            ballb.y += ballb.vy;
+            //基于距离的碰撞检测
+            var pointdis = (balla.x - ballb.x) * (balla.x - ballb.x) + (balla.y - ballb.y) * (balla.y - ballb.y); //坐标距离
+            var pointsize = (balla.size + ballb.size) * (balla.size + ballb.size); //半径距离
+            if (pointdis <= pointsize) {
+                console.log("haha");
+                //这里是能量守恒公式
+                var ballavx = ((balla.m - ballb.m) * balla.vx + 2 * ballb.m * ballb.vx) / (balla.m + ballb.m);
+                var ballavy = ((balla.m - ballb.m) * balla.vy + 2 * ballb.m * ballb.vy) / (balla.m + ballb.m);
+                var ballbvx = ((ballb.m - balla.m) * ballb.vx + 2 * balla.m * balla.vx) / (balla.m + ballb.m);
+                var ballbvy = ((ballb.m - balla.m) * ballb.vy + 2 * balla.m * balla.vy) / (balla.m + ballb.m);
+                balla.vx = ballavx;
+                balla.vy = ballavy;
+
+                ballb.vx = ballbvx;
+                ballb.vy = ballbvy;
+                //小Bug改进
+                if (Math.abs(balla.vx - ballb.vx) < 0.01 && Math.abs(balla.vy - ballb.vy) < 0.01) {
+                    console.log(balla.vx);
+                    balla.vx = -balla.vx;
+                    balla.vy = -balla.vy;
+                    return;
+                }
+            }
+
+            //判断是否碰撞到画布的边缘
+            if (balla.x + balla.size >= width || balla.x - balla.size <= 0) {
+                balla.vx *= -0.98;
+            }
+            if (balla.y + balla.size >= height || balla.y - balla.size <= 0) {
+                balla.vy *= -0.98;
+            }
+
+            if (ballb.x + ballb.size >= width || ballb.x - ballb.size <= 0) {
+                ballb.vx *= -0.98;
+            }
+            if (ballb.y + ballb.size >= height || ballb.y - ballb.size <= 0) {
+                ballb.vy *= -0.98;
+            }
+
+            //清空画布，画出小球
+            myPen.fillStyle = "#00CC00";
+            myPen.fillRect(0, 0, width, height);
+            balla.draw(myPen);
+            ballb.draw(myPen);
+            //console.log(ballb.vy);
+
+        }
+    </script>
+</body>
+
+</html>

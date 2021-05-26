@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ball Create</title>
+</head>
+
+<body>
+    <canvas id="mycanvas" width="400" height="400" style="border:1px solid #c3c3c3;"></canvas>
+    <script>
+        var myCanvas = document.getElementById("mycanvas");
+        var ctx = myCanvas.getContext("2d");
+
+        function CreateBall() {
+
+            ctx.fillStyle = "#FF0000";
+            ctx.benginPath();
+            ctx.arc(70, 18, 15, 0, 21, false);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawTriangle() {
+            // the triangle - works perfectly
+            ctx.beginPath();
+            ctx.moveTo(200, 100);
+            ctx.lineTo(170, 150);
+            ctx.lineTo(230, 150);
+            ctx.closePath();
+
+            // the fill color
+            ctx.fillStyle = "rgba(255, 204, 0, 1)";
+            ctx.fill();
+        }
+
+        drawTriangle();
+        CreateBall();
+    </script>
+</body>
+
+</html>
