@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Border Demo</title>
+    <style>
+        #border_width {
+            border-style: solid;
+            border-color: rgb(174, 226, 221);
+        }
+        
+        p.one {
+            border-style: solid;
+            border-width: 5px;
+            border-color: red green blue yellow;
+        }
+        
+        p.two {
+            border-style: groove;
+            border-width: medium;
+            border-color: darkgoldenrod;
+        }
+        
+        p.three {
+            border-style: double;
+            border-width: thick;
+            border-color: blueviolet;
+        }
+        
+        p.four {
+            border-style: dotted;
+            border-width: thin;
+            border-color: blue;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="border_width">
+        <h2>border-width usage</h2>
+        <p>border-width 规定四条边框的长度</p>
+        <p class="one">some text</p>
+        <p class="two">some text</p>
+        <P class="three">some text</P>
+        <p class="four">some text</p>
+
+        <p><b>注释：</b>border-color 属性单独使用时不起作用。请首先使用 border-style 属性设置样式。</p>
+    </div>
+</body>
+
+</html>

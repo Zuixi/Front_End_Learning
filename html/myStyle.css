@@ -1,0 +1,40 @@
+.header {
+    background-color: aquamarine;
+    text-align: center;
+    padding: 0px;
+    color: black;
+}
+
+.nav {
+    background-color: cornsilk;
+    text-align: left;
+    color: crimson;
+    line-height: 30px;
+    font-family: sans-serif;
+    float: left;
+    height: 300px;
+    width: 150px;
+}
+
+.section {
+    background-color: darkgreen;
+    text-align: left;
+    text-shadow: darkkhaki;
+    color: gold;
+    font-size: medium;
+    float: right;
+    width: 700px;
+    height: 400px;
+    line-height: 30px;
+}
+
+.footer {
+    background-color: black;
+    text-align: justify;
+    color: white;
+    padding: auto;
+    font-style: oblique;
+    clear: both;
+    width: 600px;
+    height: 150px;
+}
